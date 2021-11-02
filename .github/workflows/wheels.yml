@@ -20,6 +20,8 @@ on:
 jobs:
   # Check whether to build the wheels and the source tarball
   check_build_trigger:
+    permissions:
+      contents: read
     name: Check build trigger
     runs-on: ubuntu-latest
     if: github.repository == 'scikit-learn/scikit-learn'
@@ -38,6 +40,8 @@ jobs:
 
   # Build the wheels for Linux, Windows and macOS for Python 3.7 and newer
   build_wheels:
+    permissions:
+      contents: read
     name: Build wheel for cp${{ matrix.python }}-${{ matrix.platform_id }}-${{ matrix.manylinux_image }}
     runs-on: ${{ matrix.os }}
     needs: check_build_trigger
@@ -113,6 +117,8 @@ jobs:
 
   # Build the source distribution under Linux
   build_sdist:
+    permissions:
+      contents: read
     name: Source distribution
     runs-on: ubuntu-latest
     needs: check_build_trigger
@@ -146,6 +152,8 @@ jobs:
 
   # Upload the wheels and the source distribution
   upload_anaconda:
+    permissions:
+      contents: read
     name: Upload to Anaconda
     runs-on: ubuntu-latest
     needs: [build_wheels, build_sdist]
